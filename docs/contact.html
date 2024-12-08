@@ -13,9 +13,25 @@
 </head>
 <body>
     <div class="container-fluid">
+        <!-- Mobile Menu -->
+        <div class="mobileMenuContainer">
+            <input title="toggler" type="checkbox" class="toggler">
+            <div class="mobileButtonStyle hamburger perfectCenter">
+                <div></div>
+            </div>
+            <div class="mobileMenuModal mobileMenu">
+                <ul>
+                    <li><a href="index.html">About</a></li>
+                    <li><a href="menu.html">Menu</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation -->
         <nav>
             <a href="index.html">
-                <img id="logo" src="images/logo.jpg" alt="Bryan's Café Logo">
+                <img id="logo" src="images/logo.jpg" alt="Bryan's Cafe Logo">
             </a>
             <ul class="nav">
                 <li class="nav-item"><a class="nav-link" href="index.html">About</a></li>
@@ -25,24 +41,81 @@
         </nav>
 
         <div class="mainWrapper">
+            <!-- Contact Form Section -->
             <main class="row">
                 <h1>Contact us</h1>
-                <form class="registrationForm" name="registrationForm" action="processes/processRegisterCustomer.php" method="post">
-                    <!-- Form fields go here -->
-                </form>
+                
+                <div class="row">
+                    <!-- Registration Form -->
+                    <form class="registrationForm" name="registrationForm" action="processes/processRegisterCustomer.php" method="post">
+                        <fieldset>
+                            <div class="inputGroup">
+                                <label for="firstname">First name<sup>*</sup>:</label>
+                                <input type="text" id="firstname" name="firstname" required>
+                            </div>
+
+                            <div class="inputGroup">
+                                <label for="lastname">Last name<sup>*</sup>:</label>
+                                <input type="text" id="lastname" name="lastname" required>
+                            </div>
+
+                            <div class="inputGroup">
+                                <label for="emailAddress">Email Address<sup>*</sup>:</label>
+                                <input type="email" id="emailAddress" name="emailAddress" required>
+                            </div>
+
+                            <div class="inputGroup">
+                                <label for="subject">Message subject<sup>*</sup>:</label>
+                                <input type="text" id="subject" name="subject" required>
+                            </div>
+
+                            <div class="inputGroup">
+                                <label for="message">Message body<sup>*</sup>:</label>
+                                <textarea id="message" name="message" required></textarea>
+                            </div>
+
+                            <!-- Submit Button -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Submit
+                            </button>
+                            
+                            <!-- Success Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Success</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Message sent!
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
 
                 <h1>Our branches</h1>
+
+                <!-- Branches Map Display Section -->
                 <div id="branches" class="row row-cols-1 row-cols-md-3 g-4 m-3 p-1 cardDeck"></div>
             </main>
         </div>
 
+        <!-- Footer -->
         <footer class="m-3">
-            &copy;<span id="currentYear"></span> Bryan's Cafe|<a href="privacyPolicy.html" target="">Privacy Policy</a>
+            &copy;<span id="currentYear"></span> Bryan's Cafe | <a href="privacyPolicy.html" target="">Privacy Policy</a>
         </footer>
     </div>
 
     <script type="text/javascript" src="js/branches.js"></script>
     <script type="text/javascript">
+        // Update the current year in footer
         document.querySelector("#currentYear").innerHTML = new Date().getFullYear();
     </script>
     <script src="https://kit.fontawesome.com/c0c1ac414c.js" crossorigin="anonymous"></script>
