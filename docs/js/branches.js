@@ -1,23 +1,18 @@
 const XHR = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-let cards = document.getElementsByClassName('cardDesk')[0];
-let branchlist;
+let cards = document.getElementsByClassName('cardDeck')[0];
+let branchList;
 
-XHR.onreadystatechange = function() {
-    fetchBranches() ? populateBranches(branchlist) : fetchBranches();
-
+XHR.onreadystatechange = function () {
+    if (XHR.readyState === 4 && XHR.status === 200) {
+        branchList = XHR.responseXML.getElementsByTagName('branch');
+        populateBranches(branchList);
+    }
 };
+
 XHR.open("GET", "xml/branches.xml", true);
 XHR.send();
 
-function fetchBranches() {
-    if(XHR.readyState == 4) {
-        //console.log('pizza fetched');
-        branchList = XHR.responsesXML.getElementByTagName('branch');
-        return true
-    } else return false;
-}
-
-function generateCard(address, contact, hours, mapslink) {
+function generateCard(address, contact, hours, mapsLink) {
     let card = document.createElement("div");
     card.classList.add("col");
     card.innerHTML = `
@@ -30,17 +25,16 @@ function generateCard(address, contact, hours, mapslink) {
                 <p class="card-text">${hours}</p>
             </div>
         </div>
-        `;
+    `;
     return card;
 }
 
 function populateBranches(branches) {
     Array.from(branches).forEach(branch => {
-        let address = branch.getElementByTagName("address")[0].textContent;
-        let contact = branch.getElementByTagName("contact")[0].textContent;
-        let hours = branch.getElementByTagName("hours")[0].textContent;
-        let mapsLink = branch.getElementByTagName("mapsLink")[0].textContent;
+        let address = branch.getElementsByTagName("address")[0].textContent;
+        let contact = branch.getElementsByTagName("contact")[0].textContent;
+        let hours = branch.getElementsByTagName("hours")[0].textContent;
+        let mapsLink = branch.getElementsByTagName("mapsLink")[0].textContent;
         cards.appendChild(generateCard(address, contact, hours, mapsLink));
-    })
-
+    });
 }
