@@ -1,25 +1,26 @@
 const XHR = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
-let cards = document.getElementById('branches'); // The container for the branch cards
+let cards = document.getElementById('branches'); // Make sure the ID matches in your HTML
+let branchList;
 
-XHR.onreadystatechange = function() {
+// Fetch the branches data
+XHR.onreadystatechange = function () {
     if (XHR.readyState == 4 && XHR.status == 200) {
-        let branchList = XHR.responseXML.getElementsByTagName('branch');
-        populateBranches(branchList); // Calls the function to populate the branches
+        branchList = XHR.responseXML.getElementsByTagName('branch');
+        populateBranches(branchList);
     }
 };
 
-// Fetch the XML file
 XHR.open("GET", "xml/branches.xml", true);
 XHR.send();
 
-// Function to generate a card for each branch
+// Generate and populate cards with branch data
 function generateCard(address, contact, hours, mapsLink) {
     let card = document.createElement("div");
     card.classList.add("col");
 
     card.innerHTML = `
         <div class="card">
-            <iframe src="${mapsLink}" width="100%" height="300px" style="border:0;" allowfullscreen="" loading="lazy" class="card-img-top"></iframe>
+            <iframe id="branch1" src="${mapsLink}" width="100%" height="300px" style="border:0;" allowfullscreen="" loading="lazy" class="card-img-top"></iframe>
             <div class="card-body">
                 <h5 class="card-title">${address}</h5>
                 <p class="card-text">${contact}</p>
@@ -30,7 +31,7 @@ function generateCard(address, contact, hours, mapsLink) {
     return card;
 }
 
-// Function to populate all the branches on the page
+// Populate branches on the page
 function populateBranches(branches) {
     Array.from(branches).forEach(branch => {
         let address = branch.getElementsByTagName("address")[0].textContent;
@@ -38,6 +39,7 @@ function populateBranches(branches) {
         let hours = branch.getElementsByTagName("hours")[0].textContent;
         let mapsLink = branch.getElementsByTagName("mapsLink")[0].textContent;
 
-        cards.appendChild(generateCard(address, contact, hours, mapsLink)); // Add the generated card to the branches container
+        // Append each card to the branches section
+        cards.appendChild(generateCard(address, contact, hours, mapsLink));
     });
 }
